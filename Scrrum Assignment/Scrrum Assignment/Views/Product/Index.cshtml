@@ -1,0 +1,46 @@
+﻿@model List<Product>
+<!--Index page-->
+<div class="container">
+    <div class="row p-3">
+        <h1 class="col-6">Product list</h1>
+        <div class="text-end col-6">
+            <a asp-controller="product" asp-action="Upsert" class="btn btn-primary "><i class="bi bi-plus-circle"></i> Create </a>
+        </div>
+
+    </div>
+</div>
+<!--Creating Listing Table-->
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Image</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <!--Fetching All objects-->
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td>@obj.ProductTitle</td>
+                <td>@obj.Price</td>
+                <td>@obj.Stock</td>
+                <td><img src="@obj.ImageURL" style="width:150px; height:100px;"/></td>
+                <td>
+                    <div class="btn-group w-75" role="group">
+                        <a asp-controller="Product" asp-action="Upsert" asp-route-Id="@obj.Id" class="btn btn-primary mx-2">
+                            <i class="bi bi-pencil-square"></i>Edit
+                        </a>
+                        <a asp-controller="Product" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-2">
+                            <i class="bi bi-trash"></i>Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

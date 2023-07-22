@@ -1,0 +1,64 @@
+﻿
+<!-- Include Highcharts library -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Column chart container -->
+<div id="column-chart-container"></div>
+
+<!-- Price range filter -->
+<input type="number" id="min-price" placeholder="Min Price">
+<input type="number" id="max-price" placeholder="Max Price">
+<button onclick="filterChartData()">Apply Filter</button>
+
+<!-- JavaScript to generate the column chart and handle price range filtering -->
+<script>
+    // Function to generate the column chart
+    
+    function generateChart(chartData) {
+        Highcharts.chart('column-chart-container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Product Stock'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Stock'
+                }
+            },
+            series: [{
+                name: 'Stock',
+                data: chartData
+            }]
+        });
+    }
+
+    // Function to filter chart data based on price range
+    function filterChartData() {
+        var minPrice = parseFloat($('#min-price').val());
+        var maxPrice = parseFloat($('#max-price').val());
+
+        // AJAX request to get filtered chart data from the server
+        $.ajax({
+            url: '/Chart/GetChartData',
+            type: 'GET',
+            data: { minPrice: minPrice, maxPrice: maxPrice },
+            success: function (response) {
+                generateChart(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    // Initial chart data on page load
+    $(document).ready(function () {
+        filterChartData();
+    });
+</script>

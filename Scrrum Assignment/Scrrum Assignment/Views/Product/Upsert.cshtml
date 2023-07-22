@@ -1,0 +1,54 @@
+﻿@model Product
+<!--Update/insert page-->
+<div class="row pb-2">
+    <h2>
+        @(Model.Id!=0?"Update":"Create" )
+        Product</h2>
+    <hr />
+</div>
+<form method="post" enctype="multipart/form-data">
+    <div class="border p-3 m-4">
+        
+        <input asp-for="Id" hidden />
+        <input asp-for="ImageURL " hidden />
+        <div class="mb-3 row">
+            <Label asp-for="ProductTitle"></Label>
+            <input asp-for="ProductTitle" class="form-control" />
+            <span asp-validation-for="ProductTitle" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row">
+            <Label asp-for="Price"></Label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3 row">
+            <Label asp-for="Stock"></Label>
+            <input asp-for="Stock" class="form-control" />
+            <span asp-validation-for="Stock" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3 row">
+            <Label asp-for="ImageURL"></Label>
+            <input type="file" name="file" asp-for="ImageURL" class="form-control" />
+            
+
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary  form-control">@(Model.Id != 0 ? "Update" : "Create") Product</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary form-control"> Back to listing page</a>
+            </div>
+
+
+        </div>
+
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }
